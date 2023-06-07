@@ -1,3 +1,10 @@
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# go.gitignore from https://github.com/github/gitignore/blob/master/Go.gitignore
 # Binaries for programs and plugins
 *.exe
 *.exe~
