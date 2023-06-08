@@ -1,33 +1,33 @@
 package main
 
 import (
-	"container/list"
 	"fmt"
 	"leetcode_go/leetcode/schema"
 )
 
 func rightSideView(root *schema.TreeNode) []int {
 	var result []int
-	queue := list.New()
+	var queue []*schema.TreeNode
 	if root != nil {
-		queue.PushBack(root)
+		queue = append(queue, root)
 	}
 
 	for true {
-		size := queue.Len()
+		size := len(queue)
 		if size == 0 {
 			break
 		}
 		for i := 0; i < size; i++ {
-			node := queue.Remove(queue.Front()).(*schema.TreeNode)
+			node := queue[0]
+			queue = queue[1:]
 			if i+1 == size {
 				result = append(result, node.Val)
 			}
 			if node.Left != nil {
-				queue.PushBack(node.Left)
+				queue = append(queue, node.Left)
 			}
 			if node.Right != nil {
-				queue.PushBack(node.Right)
+				queue = append(queue, node.Right)
 			}
 		}
 	}
