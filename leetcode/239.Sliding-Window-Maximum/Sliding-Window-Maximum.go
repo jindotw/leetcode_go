@@ -2,32 +2,30 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 func maxSlidingWindow(nums []int, k int) []int {
-	loops := len(nums) - k + 1
-	currMax := math.MinInt
 	var result []int
-	for i := 0; i < loops; i++ {
-		arr := nums[i : i+k]
-		for j := 0; j < len(arr); j++ {
-			if arr[j] > currMax {
-				currMax = arr[j]
-			}
-		}
-		result = append(result, currMax)
-		if arr[len(arr)-1] != currMax {
-			currMax = math.MinInt
-		}
-
+	q := MonotonicQueue{elem: []int{}}
+	for i := 0; i < k; i++ {
+		q.Enqueue(nums[i])
 	}
+
+	val, _ := q.Front()
+	result = append(result, val)
+	for i := k; i < len(nums); i++ {
+		q.Dequeue(nums[i-k])
+		q.Enqueue(nums[i])
+		val, _ = q.Front()
+		result = append(result, val)
+	}
+
 	return result
 }
 
 func main() {
-	windows := []int{1, -1}
-	k := 1
+	windows := []int{1, 3, -1, -3, 5, 3, 6, 7}
+	k := 3
 	arr := maxSlidingWindow(windows, k)
 	fmt.Println(arr)
 }
