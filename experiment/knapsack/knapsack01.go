@@ -78,11 +78,20 @@ func solutionRecur(weight []int, value []int, n int, capacity int) int {
 	return val
 }
 
+func unboundedKnapsack(capacity int, weight []int, value []int) {
+	memo := make([]int, capacity+1)
+
+	for i, wt := range weight {
+		for j := wt; j <= capacity; j++ {
+			memo[j] = max(memo[j], memo[j-wt]+value[i])
+		}
+	}
+	fmt.Println(memo)
+}
+
 func main() {
-	capacity := 8
-	weight := []int{0, 2, 3, 1, 5, 6, 4}
-	value := []int{0, 60, 20, 30, 25, 35, 40}
-	// solution1D(capacity, weight, value)
-	val := solutionRecur(weight, value, len(weight)-1, capacity)
-	fmt.Println(val)
+	capacity := 4
+	weight := []int{1, 3, 4}
+	value := []int{15, 50, 50}
+	unboundedKnapsack(capacity, weight, value)
 }
