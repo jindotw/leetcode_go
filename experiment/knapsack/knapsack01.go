@@ -42,9 +42,47 @@ func solution1D(capacity int, weight []int, value []int) {
 	fmt.Println(memo)
 }
 
+func solutionRecurInner(memo [][]int, weight []int, value []int, n int, capacity int) int {
+	if n == 0 || capacity == 0 {
+		return 0
+	}
+	if memo[n][capacity] != 0 {
+		fmt.Printf("memo hit on %d %d\n", n, capacity)
+		return memo[n][capacity]
+	}
+	if weight[n] > capacity {
+		memo[n][capacity] = solutionRecurInner(memo, weight, value, n-1, capacity)
+		return memo[n][capacity]
+	}
+
+	result := max(
+		solutionRecurInner(memo, weight, value, n-1, capacity-weight[n])+value[n],
+		solutionRecurInner(memo, weight, value, n-1, capacity),
+	)
+	memo[n][capacity] = result
+
+	return result
+}
+
+func solutionRecur(weight []int, value []int, n int, capacity int) int {
+	memo := make([][]int, len(weight))
+	for i := 0; i < len(weight); i++ {
+		memo[i] = make([]int, capacity+1)
+	}
+	for i := weight[1]; i <= capacity; i++ {
+		memo[1][i] = value[1]
+	}
+	val := solutionRecurInner(memo, weight, value, n, capacity)
+	fmt.Println(memo)
+
+	return val
+}
+
 func main() {
-	capacity := 7
-	weight := []int{4, 3, 1}
-	value := []int{15, 20, 30}
-	solution1D(capacity, weight, value)
+	capacity := 8
+	weight := []int{0, 2, 3, 1, 5, 6, 4}
+	value := []int{0, 60, 20, 30, 25, 35, 40}
+	// solution1D(capacity, weight, value)
+	val := solutionRecur(weight, value, len(weight)-1, capacity)
+	fmt.Println(val)
 }
