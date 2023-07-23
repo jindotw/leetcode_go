@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"leetcode_go/leetcode/schema"
+	"leetcode_go/schema"
 )
 
 func levelOrderBottom(root *schema.TreeNode) [][]int {

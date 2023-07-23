@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"leetcode_go/leetcode/schema"
+	"leetcode_go/schema"
 )
 
 func preOrder(node *schema.TreeNode, targetSum int, cache []int) int {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"leetcode_go/leetcode/schema"
+	"leetcode_go/schema"
 )
 
 func averageOfLevels(root *schema.TreeNode) []float64 {
