@@ -18,13 +18,19 @@ func (node *TreeNode) GetVal() int {
 	return node.Val
 }
 
+/*
+      3
+    1   4
+  2    6  5
+*/
+
 func MakeTree() *TreeNode {
-	node33 := &TreeNode{Val: 3}
-	node13 := &TreeNode{Val: 1}
+	node32 := &TreeNode{Val: 2}
+	node63 := &TreeNode{Val: 6}
 	node53 := &TreeNode{Val: 5}
 
-	node12 := &TreeNode{Val: 1, Left: node33}
-	node42 := &TreeNode{Val: 4, Left: node13, Right: node53}
+	node12 := &TreeNode{Val: 1, Left: node32}
+	node42 := &TreeNode{Val: 4, Left: node63, Right: node53}
 
 	node31 := &TreeNode{Val: 3, Left: node12, Right: node42}
 
