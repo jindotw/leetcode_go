@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func fibonacciSequence(n int) int {
 	if n <= 1 {
 		return n
@@ -13,8 +11,4 @@ func fibonacciSequence(n int) int {
 	}
 
 	return memo[1]
-}
-
-func main() {
-	fmt.Println(fibonacciSequence(19))
 }
