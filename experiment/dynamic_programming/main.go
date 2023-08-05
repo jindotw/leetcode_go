@@ -20,8 +20,17 @@ func callUniquePaths() {
 	fmt.Println(uniquePaths(8, 6))
 }
 
+func callUniquePaths2() {
+	grid := [][]int{
+		{0, 1, 0},
+		{0, 0, 0},
+		{0, 0, 0},
+	}
+	fmt.Println(uniquePathsWithObstacles(grid))
+}
+
 func main() {
-	callUniquePaths()
+	callUniquePaths2()
 }
 
 func dump(memo [][]int) {
