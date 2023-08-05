@@ -45,3 +45,16 @@ func knapsack01(values, weight []int, bagSize int) int {
 	dump(memo)
 	return memo[items-1][bagSize]
 }
+
+func knapsack01OneDim(values, weight []int, bagSize int) int {
+	memo := make([]int, bagSize+1)
+	for i, _ := range memo {
+		memo[i] = 0
+	}
+	for i := 0; i < len(weight); i++ {
+		for j := bagSize; j >= weight[i]; j-- {
+			memo[j] = max(memo[j], memo[j-weight[i]]+values[i])
+		}
+	}
+	return memo[bagSize]
+}
