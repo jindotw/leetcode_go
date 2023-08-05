@@ -1,20 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-)
-
-func dump(memo [][]int) {
-	for _, r := range memo {
-		arr := make([]string, 0)
-		for _, c := range r {
-			arr = append(arr, fmt.Sprintf("%0.2d", c))
-		}
-		fmt.Println(strings.Join(arr, " "))
-	}
-}
-
 func max(a, b int) int {
 	if a > b {
 		return a
