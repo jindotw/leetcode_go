@@ -34,8 +34,13 @@ func callCanPartition() {
 	fmt.Println(canPartition(nums))
 }
 
+func callLastStoneWeightII() {
+	nums := []int{1, 3, 8}
+	fmt.Println(lastStoneWeightII(nums))
+}
+
 func main() {
-	callCanPartition()
+	callLastStoneWeightII()
 }
 
 func dump(memo [][]int) {
