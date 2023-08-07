@@ -29,8 +29,13 @@ func callUniquePaths2() {
 	fmt.Println(uniquePathsWithObstacles(grid))
 }
 
+func callCanPartition() {
+	nums := []int{1, 5, 11, 5}
+	fmt.Println(canPartition(nums))
+}
+
 func main() {
-	callUniquePaths2()
+	callCanPartition()
 }
 
 func dump(memo [][]int) {
