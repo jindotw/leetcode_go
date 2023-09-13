@@ -13,42 +13,40 @@ func maxNumber(nums1 []int, nums2 []int, k int) []int {
 		return b
 	}
 	isLeftBigger := func(left []int, right []int) bool {
-		for len(left) > 0 && len(right) > 0 && left[0] == right[0] {
-			left = left[1:]
-			right = right[1:]
-		}
-		if len(left) == 0 {
-			return false
-		}
-		if (len(right)) == 0 {
-			return true
+		minLen := min(len(left), len(right))
+		for i := 0; i < minLen; i++ {
+			if left[i] > right[i] {
+				return true
+			} else if right[i] > left[i] {
+				return false
+			}
 		}
 
-		return left[0] > right[0]
+		return len(left) > len(right)
 	}
 	findMaxNumber := func(arr []int, retain int) []int {
-		op := len(arr) - retain
-		st := make([]int, 0)
+		operations := len(arr) - retain
+		stack := make([]int, 0)
 		for _, val := range arr {
-			last := len(st) - 1
-			for op > 0 && last >= 0 && val > st[last] {
-				st = st[:last]
+			last := len(stack) - 1
+			for operations > 0 && last >= 0 && val > stack[last] {
+				stack = stack[:last]
 				last--
-				op--
+				operations--
 			}
-			st = append(st, val)
+			stack = append(stack, val)
 		}
-		if len(st) > retain {
-			return st[0:retain]
+		if len(stack) > retain {
+			return stack[:retain]
 		}
-		return st
+		return stack
 	}
 	merge := func(arr1 []int, arr2 []int) []int {
 		ret := make([]int, 0)
 		i, j := 0, 0
 		len1 := len(arr1)
 		len2 := len(arr2)
-		for len(ret) <= k && i < len1 && j < len2 {
+		for len(ret) < k && i < len1 && j < len2 {
 			if isLeftBigger(arr1[i:], arr2[j:]) {
 				ret = append(ret, arr1[i])
 				i++
@@ -90,6 +88,6 @@ func main() {
 	//nums2 := []int{6, 0, 4}
 	//nums1 := []int{8, 5, 9, 5, 1, 6, 9}
 	//nums2 := []int{2, 6, 4, 3, 8, 4, 1, 0, 7, 2, 9, 2, 8}
-	k := 3
+	k := 4
 	fmt.Println(maxNumber(nums1, nums2, k))
 }
