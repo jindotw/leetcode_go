@@ -54,6 +54,34 @@ func numIslands(grid [][]byte) int {
 	return islands
 }
 
+func numIslands2(grid [][]byte) int {
+	islands := 0
+	rows, cols := len(grid), len(grid[0])
+	var dfs func(int, int)
+	dfs = func(m, n int) {
+		if m < 0 || n < 0 || m >= rows || n >= cols || grid[m][n] == '0' {
+			return
+		}
+		// mark grid[m][n] as visited
+		grid[m][n] = '0'
+		dfs(m+1, n)
+		dfs(m-1, n)
+		dfs(m, n+1)
+		dfs(m, n-1)
+	}
+
+	for m, row := range grid {
+		for n, val := range row {
+			if val == '1' {
+				islands++
+				dfs(m, n)
+			}
+		}
+	}
+
+	return islands
+}
+
 func main() {
 	grid := [][]byte{
 		{'1', '1', '1', '1', '0'},
@@ -62,4 +90,5 @@ func main() {
 		{'0', '0', '1', '0', '1'},
 	}
 	fmt.Println(numIslands(grid))
+	fmt.Println(numIslands2(grid))
 }
