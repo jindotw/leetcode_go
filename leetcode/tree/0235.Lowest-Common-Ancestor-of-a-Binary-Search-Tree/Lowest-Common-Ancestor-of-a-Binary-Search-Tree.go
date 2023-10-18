@@ -39,32 +39,25 @@ func buildTree(nums []interface{}) *TreeNode {
 
 	return root
 }
+func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
+	curr := root
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func diameterOfBinaryTree(root *TreeNode) int {
-	maxDiameter := 0
-	var dfs func(node *TreeNode) int
-	dfs = func(node *TreeNode) int {
-		if node == nil {
-			return -1
+	for curr != nil {
+		if p.Val > curr.Val && q.Val > curr.Val {
+			curr = curr.Right
+		} else if p.Val < curr.Val && q.Val < curr.Val {
+			curr = curr.Left
+		} else {
+			break
 		}
-		lftHeight := dfs(node.Left)
-		rgtHeight := dfs(node.Right)
-		maxDiameter = max(maxDiameter, 2+lftHeight+rgtHeight)
-		return 1 + max(lftHeight, rgtHeight)
 	}
-	dfs(root)
-	return maxDiameter
+	return curr
 }
 
 func main() {
-	nums := []interface{}{4, -7, -3, nil, nil, -9, -3, 9, -7, -4, nil, 6, nil, -6, -6, nil, nil, 0, 6, 5, nil, 9, nil, nil, -1, -4, nil, nil, nil, -2}
-	root := buildTree(nums)
-	fmt.Println(diameterOfBinaryTree(root))
+	root := buildTree([]interface{}{6, 2, 8, 0, 4, 7, 9, nil, nil, 3, 5})
+	node := lowestCommonAncestor(root, root.Left, root.Right)
+	if node != nil {
+		fmt.Println(node.Val)
+	}
 }
