@@ -2,15 +2,15 @@ package main
 
 import "fmt"
 
-// TreeNode /*
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
 	Right *TreeNode
 }
 
-func invertTree(root *TreeNode) *TreeNode {
+func maxDepth(root *TreeNode) int {
 	queue := make([]*TreeNode, 0)
+	depth := 0
 	if root != nil {
 		queue = append(queue, root)
 	}
@@ -20,7 +20,6 @@ func invertTree(root *TreeNode) *TreeNode {
 		for i := 0; i < size; i++ {
 			node := queue[0]
 			queue = queue[1:]
-			node.Left, node.Right = node.Right, node.Left
 			if node.Left != nil {
 				queue = append(queue, node.Left)
 			}
@@ -28,8 +27,25 @@ func invertTree(root *TreeNode) *TreeNode {
 				queue = append(queue, node.Right)
 			}
 		}
+		depth++
 	}
-	return root
+
+	return depth
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func maxDepth2(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	return 1 + max(maxDepth2(root.Left), maxDepth2(root.Right))
 }
 
 func main() {
@@ -37,9 +53,9 @@ func main() {
 	node3 := &TreeNode{Val: 3}
 	node2 := &TreeNode{
 		Val:   2,
-		Left:  node3,
-		Right: node1,
+		Left:  node1,
+		Right: node3,
 	}
-	root := invertTree(node2)
-	fmt.Println(root.Val, root.Left.Val, root.Right.Val)
+	fmt.Println(maxDepth(node2))
+	fmt.Println(maxDepth2(node2))
 }
