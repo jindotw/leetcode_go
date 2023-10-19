@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 type TreeNode struct {
@@ -43,24 +42,34 @@ func buildTree(nums []interface{}) *TreeNode {
 	return root
 }
 
-func isValidBST(root *TreeNode) bool {
-	var dfs func(*TreeNode, int, int) bool
-	dfs = func(node *TreeNode, lft, rgt int) bool {
-		if node == nil {
-			return true
-		}
-		if !(lft < node.Val && node.Val < rgt) {
-			return false
-		}
-
-		return dfs(node.Left, lft, node.Val) && dfs(node.Right, node.Val, rgt)
+func max(a, b int) int {
+	if a > b {
+		return a
 	}
-	return dfs(root, math.MinInt, math.MaxInt)
+	return b
+}
+
+func maxPathSum(root *TreeNode) int {
+	maxSum := root.Val
+	var dfs func(*TreeNode) int
+	dfs = func(node *TreeNode) int {
+		if node == nil {
+			return 0
+		}
+		lft := max(dfs(node.Left), 0)
+		rgt := max(dfs(node.Right), 0)
+		// compute the max path sum WITH split
+		maxSum = max(maxSum, node.Val+lft+rgt)
+
+		// return the max value WITHOUT split
+		return node.Val + max(lft, rgt)
+	}
+	dfs(root)
+	return maxSum
 }
 
 func main() {
-	// root := buildTree([]interface{}{5, 1, 4, nil, nil, 3, 6})
-	root := buildTree([]interface{}{5, 4, 6, nil, nil, 3, 7})
-	// root := buildTree([]interface{}{2, 1, 3})
-	fmt.Println(isValidBST(root))
+	// root := []interface{}{8, 9, 20, nil, nil, 6, 7}
+	root := []interface{}{2, 1, 3}
+	fmt.Println(maxPathSum(buildTree(root)))
 }
