@@ -23,9 +23,35 @@ func maxSlidingWindow(nums []int, k int) []int {
 	return result
 }
 
+func maxSlidingWindow2(nums []int, k int) []int {
+	result := make([]int, 0)
+	queue := make([]int, 0)
+
+	lft := 0
+	for rgt, num := range nums {
+		last := len(queue) - 1
+		for last >= 0 && num > queue[last] {
+			queue = queue[:last]
+			last--
+		}
+		queue = append(queue, num)
+		if rgt+1 >= k {
+			result = append(result, queue[0])
+			last := len(queue) - 1
+			if last >= 0 && queue[0] == nums[lft] {
+				queue = queue[1:]
+				last--
+			}
+			lft++
+		}
+	}
+
+	return result
+}
+
 func main() {
-	windows := []int{1, 3, -1, -3, 5, 3, 6, 7}
-	k := 3
-	arr := maxSlidingWindow(windows, k)
-	fmt.Println(arr)
+	windows := []int{-7, -8, 7, 5, 7, 1, 6, 0}
+	k := 4
+	fmt.Println(maxSlidingWindow(windows, k))
+	fmt.Println(maxSlidingWindow2(windows, k))
 }

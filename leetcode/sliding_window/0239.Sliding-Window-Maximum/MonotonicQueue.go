@@ -21,7 +21,7 @@ func (queue *MonotonicQueue) Enqueue(val int) {
 
 // Dequeue remove the head element if it matches the dequeue value/**
 func (queue *MonotonicQueue) Dequeue(val int) {
-	for len(queue.elem) > 0 && queue.elem[0] == val {
+	if len(queue.elem) > 0 && queue.elem[0] == val {
 		queue.elem = queue.elem[1:]
 	}
 }
