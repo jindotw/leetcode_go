@@ -2,46 +2,38 @@ package main
 
 import "fmt"
 
-func canFinish(numCourses int, prerequisites [][]int) bool {
+func canFinish1(numCourses int, prerequisites [][]int) bool {
 	preMap := make(map[int][]int)
-	visited := make(map[int]struct{})
 	for _, pre := range prerequisites {
-		arr, present := preMap[pre[0]]
-		if !present {
-			arr = make([]int, 0)
-		}
-		arr = append(arr, pre[1])
-		preMap[pre[0]] = arr
+		course := pre[0]
+		prerequisite := pre[1]
+		preMap[course] = append(preMap[course], prerequisite)
 	}
-	fmt.Println(preMap)
+
+	visited := make(map[int]struct{})
 	var dfs func(int) bool
 	dfs = func(course int) bool {
 		if _, present := visited[course]; present {
 			return false
 		}
-		depCourses, present := preMap[course]
-		if !present {
-			return true
-		}
-		if len(depCourses) == 0 {
+		if len(preMap[course]) == 0 {
 			return true
 		}
 		visited[course] = struct{}{}
-		for _, crs := range depCourses {
-			if !dfs(crs) {
+		for _, pre := range preMap[course] {
+			if !dfs(pre) {
 				return false
 			}
+			delete(preMap, pre)
 		}
 		delete(visited, course)
 		return true
 	}
 
-	for _, pre := range prerequisites {
-		course := pre[0]
+	for course := 0; course < numCourses; course++ {
 		if !dfs(course) {
 			return false
 		}
-		delete(preMap, course)
 	}
 
 	return true
@@ -58,7 +50,7 @@ Topological Sort Algorithm Notes:
  4. Use BFS approach:
     a. Dequeue a node (course).
     b. For each neighbor of this node:
-    i. Reduce its dep by 1.
+    i.  Reduce its dep by 1.
     ii. If its dep becomes 0, add it to the queue.
     c. Repeat until the queue is empty.
 
@@ -105,10 +97,15 @@ func canFinish2(numCourses int, prerequisites [][]int) bool {
 }
 
 func main() {
-	// numCourses := 4
-	// prerequisites := [][]int{{1, 0}, {2, 1}, {2, 3}}
-	numCourses := 2
-	prerequisites := [][]int{{1, 0}, {0, 1}}
+	numCourses := 4
+	prerequisites := [][]int{{1, 0}, {2, 1}, {2, 3}}
+	//numCourses := 2
+	//prerequisites := [][]int{{1, 0}, {0, 1}}
 	//  fmt.Println(canFinish(numCourses, prerequisites))
+	fmt.Println(canFinish1(numCourses, prerequisites))
 	fmt.Println(canFinish2(numCourses, prerequisites))
 }
+
+// 0 -> 1
+// 1 -> 2
+// 3 -> 2
