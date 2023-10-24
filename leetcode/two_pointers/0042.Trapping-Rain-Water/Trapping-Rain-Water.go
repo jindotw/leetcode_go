@@ -43,7 +43,33 @@ func trap(height []int) int {
 	return sum
 }
 
+func trap2(height []int) int {
+	lft, rgt := 0, len(height)-1
+	lftMax, rgtMax := height[lft], height[rgt]
+	trapped := 0
+
+	max := func(a, b int) int {
+		if a > b {
+			return a
+		}
+		return b
+	}
+	for lft < rgt {
+		if lftMax <= rgtMax {
+			lft++
+			lftMax = max(lftMax, height[lft])
+			trapped += lftMax - height[lft]
+		} else {
+			rgt--
+			rgtMax = max(rgtMax, height[rgt])
+			trapped += rgtMax - height[rgt]
+		}
+	}
+	return trapped
+}
+
 func main() {
 	height := []int{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}
 	fmt.Println(trap(height))
+	fmt.Println(trap2(height))
 }

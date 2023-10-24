@@ -1,4 +1,4 @@
-feat: solved 0042 Trapping-Rain-Water [hard]
+feat: solved 42 Trapping-Rain-Water [hard]
 
 [42.  Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)  
 Hard
