@@ -18,8 +18,19 @@ func climbStairs(n int) int {
 	return val
 }
 
+func climbStairs2(n int) int {
+	memo := make([]int, n+1)
+	memo[n] = 1
+	memo[n-1] = 1
+	for i := n - 2; i >= 0; i-- {
+		memo[i] = memo[i+1] + memo[i+2]
+	}
+	fmt.Println(memo)
+	return memo[0]
+}
+
 func main() {
-	n := 2
-	ways := climbStairs(n)
-	fmt.Printf("There are %d ways to climb a %d staircases\n", ways, n)
+	n := 5
+	fmt.Printf("There are %d ways to climb a %d staircases\n", climbStairs(n), n)
+	fmt.Printf("There are %d ways to climb a %d staircases\n", climbStairs2(n), n)
 }
